@@ -1,0 +1,45 @@
+{% extends "base.html" %} 
+
+{% block title %}Transactions · xpensecraft
+{% endblock %} 
+
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-semibold">Transactions</h1>
+  <a
+    href="{% url 'transaction_add' %}"
+    class="px-4 py-2 rounded-xl border bg-white dark:bg-gray-800"
+    >+ Add</a
+  >
+</div>
+<div class="overflow-hidden rounded-2xl border">
+  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    <thead class="bg-gray-50 dark:bg-gray-800">
+      <tr>
+        <th class="px-4 py-2 text-left text-sm font-semibold">Date</th>
+        <th class="px-4 py-2 text-left text-sm font-semibold">Type</th>
+        <th class="px-4 py-2 text-left text-sm font-semibold">Amount</th>
+        <th class="px-4 py-2 text-left text-sm font-semibold">Note</th>
+      </tr>
+    </thead>
+    <tbody
+      class="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900"
+    >
+      {% for t in transactions %}
+      <tr>
+        <td class="px-4 py-2">{{ t.date }}</td>
+        <td class="px-4 py-2">{{ t.get_t_type_display }}</td>
+        <td class="px-4 py-2">₹{{ t.amount }}</td>
+        <td class="px-4 py-2">{{ t.note }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="px-4 py-6 text-center text-gray-500">
+          No transactions yet.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

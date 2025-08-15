@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load form_extras %}
+
+{% block title %}Add Transaction · xpensecraft{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">
+  Add Transaction
+</h1>
+
+<form method="post" class="space-y-6 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/70 backdrop-blur">
+  {% csrf_token %}
+  <div class="grid gap-6 md:grid-cols-2">
+    <div>
+      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Type</label>
+      {{ form.t_type|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+    </div>
+    <div>
+      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Amount (₹)</label>
+      {{ form.amount|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+    </div>
+    <div>
+      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Date</label>
+      {{ form.date|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+    </div>
+    <div class="md:col-span-2">
+      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Note</label>
+      {{ form.note|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+    </div>
+  </div>
+
+  <div class="flex gap-3">
+    <button class="px-5 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-medium shadow">
+      Save
+    </button>
+    <a href="{% url 'transaction_list' %}" class="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600 font-medium shadow">
+      Cancel
+    </a>
+  </div>
+</form>
+{% endblock %}
