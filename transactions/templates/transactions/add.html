@@ -4,38 +4,50 @@
 {% block title %}Add Transaction · xpensecraft{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">
+<h1 class="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-8">
   Add Transaction
 </h1>
 
-<form method="post" class="space-y-6 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/70 backdrop-blur">
+<form method="post" class="space-y-8 p-8 rounded-3xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md transition-colors duration-300">
   {% csrf_token %}
-  <div class="grid gap-6 md:grid-cols-2">
+  <div class="grid gap-8 md:grid-cols-2">
     <div>
-      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Type</label>
-      {{ form.t_type|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+      <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2" for="{{ form.t_type.id_for_label }}">Type</label>
+      {{ form.t_type|add_class:"w-full rounded-2xl border border-gray-300 dark:border-gray-700 px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-4 focus:ring-blue-400 transition" }}
+      {% if form.t_type.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.t_type.errors|join:", " }}</p>
+      {% endif %}
     </div>
     <div>
-      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Amount (₹)</label>
-      {{ form.amount|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+      <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2" for="{{ form.amount.id_for_label }}">Amount (₹)</label>
+      {{ form.amount|add_class:"w-full rounded-2xl border border-gray-300 dark:border-gray-700 px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-4 focus:ring-blue-400 transition" }}
+      {% if form.amount.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.amount.errors|join:", " }}</p>
+      {% endif %}
     </div>
     <div>
-      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Date</label>
-      {{ form.date|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+      <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2" for="{{ form.date.id_for_label }}">Date</label>
+      {{ form.date|add_class:"w-full rounded-2xl border border-gray-300 dark:border-gray-700 px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-4 focus:ring-blue-400 transition" }}
+      {% if form.date.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.date.errors|join:", " }}</p>
+      {% endif %}
     </div>
     <div class="md:col-span-2">
-      <label class="text-sm font-medium text-gray-500 dark:text-gray-300">Note</label>
-      {{ form.note|add_class:"mt-2 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500" }}
+      <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2" for="{{ form.note.id_for_label }}">Note</label>
+      {{ form.note|add_class:"w-full rounded-2xl border border-gray-300 dark:border-gray-700 px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-4 focus:ring-blue-400 transition" }}
+      {% if form.note.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.note.errors|join:", " }}</p>
+      {% endif %}
     </div>
   </div>
 
-  <div class="flex gap-3">
-    <button class="px-5 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-medium shadow">
-      Save
-    </button>
-    <a href="{% url 'transaction_list' %}" class="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600 font-medium shadow">
+  <div class="flex justify-end gap-4">
+    <a href="{% url 'transaction_list' %}" class="px-6 py-3 rounded-2xl bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 font-semibold shadow transition">
       Cancel
     </a>
+    <button type="submit" class="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition">
+      Save
+    </button>
   </div>
 </form>
 {% endblock %}

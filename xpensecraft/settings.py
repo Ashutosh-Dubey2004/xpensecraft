@@ -21,7 +21,9 @@ INSTALLED_APPS = [
 ]
 
 EXTERNAL_APPS = [
-    'transactions'
+    'widget_tweaks',
+    'transactions',
+    'users'
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS

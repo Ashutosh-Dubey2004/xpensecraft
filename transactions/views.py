@@ -5,6 +5,11 @@ from datetime import date
 from .models import Transaction
 from .forms import TransactionForm
 
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    return render(request, 'home.html')
+
 @login_required
 def dashboard(request):
     today = date.today()
@@ -18,22 +23,24 @@ def dashboard(request):
     net = income - spent
 
     ctx = {"spent": spent, "income": income, "net": net, "today": today}
-    return render(request, "dashboard.html", ctx)
+    return render(request, "transactions/dashboard.html", ctx)
 
 @login_required
 def transaction_list(request):
-    qs = Transaction.objects.filter(user=request.user)
-    return render(request, "transactions/list.html", {"transactions": qs})
+    transactions = Transaction.objects.filter(user=request.user).order_by('-date')
+    return render(request, "transactions/list.html", {"transactions": transactions})
+
 
 @login_required
 def transaction_add(request):
     if request.method == "POST":
         form = TransactionForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.user = request.user
-            obj.save()
+            transaction = form.save(commit=False)
+            transaction.user = request.user  # link to current user
+            transaction.save()
             return redirect("transaction_list")
     else:
         form = TransactionForm()
     return render(request, "transactions/add.html", {"form": form})
+

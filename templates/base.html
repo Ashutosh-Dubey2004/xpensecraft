@@ -2,8 +2,8 @@
 <html
   lang="en"
   class="h-full"
-  x-data="{ dark: JSON.parse(localStorage.getItem('dark')||'false') }"
-  :class="{'dark':dark}"
+  x-data="{ dark: JSON.parse(localStorage.getItem('dark') || 'false') }"
+  :class="{ 'dark': dark }"
   x-init="$watch('dark', v => localStorage.setItem('dark', JSON.stringify(v)))"
 >
   <head>
@@ -15,39 +15,57 @@
     {% load static %}
   </head>
   <body
-    class="h-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+    class="h-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300"
   >
     <header
-      class="sticky top-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur border-b border-gray-200/60 dark:border-gray-800"
+      class="sticky top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200/60 dark:border-gray-800 z-50"
     >
       <div
-        class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between"
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
       >
-        <a href="{% url 'dashboard' %}" class="text-xl font-semibold"
-          >xpensecraft</a
-        >
-        <nav class="flex items-center gap-3">
+        <a href="{% url 'dashboard' %}" class="text-2xl font-bold text-blue-600 dark:text-blue-400 hover:underline">
+          xpensecraft
+        </a>
+        <nav class="flex items-center gap-4">
           <a
             href="{% url 'transaction_list' %}"
-            class="px-3 py-1.5 rounded-xl border"
-            >Transactions</a
+            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition"
           >
-          <button @click="dark=!dark" class="px-3 py-1.5 rounded-xl border">
+            Transactions
+          </a>
+
+          <button
+            @click="dark = !dark"
+            aria-label="Toggle dark mode"
+            class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition"
+            title="Toggle Dark Mode"
+          >
             🌓
           </button>
+
           {% if user.is_authenticated %}
-          <a href="/admin/logout/" class="px-3 py-1.5 rounded-xl border"
-            >Logout</a
-          >
+            <form id="logout-form" method="post" action="{% url 'logout' %}" class="m-0">
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+              >
+                Logout
+              </button>
+            </form>
           {% else %}
-          <a href="/admin/login/?next=/" class="px-3 py-1.5 rounded-xl border"
-            >Login</a
-          >
+            <a
+              href="{% url 'login' %}"
+              class="px-4 py-2 rounded-lg border border-green-600 text-green-600 font-semibold hover:bg-green-600 hover:text-white transition"
+            >
+              Login
+            </a>
           {% endif %}
         </nav>
       </div>
     </header>
-    <main class="max-w-6xl mx-auto px-4 py-6">
+
+    <main class="max-w-6xl mx-auto px-6 py-8">
       {% block content %}{% endblock %}
     </main>
   </body>
